@@ -1,8 +1,7 @@
-package tool
+package database
 
 import (
 	"context"
-	"github.com/redis/go-redis/v9"
 	"log"
 	"sync"
 )

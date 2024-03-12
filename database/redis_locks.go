@@ -1,7 +1,7 @@
-package tool
+package database
 
 import (
-	goredislib "github.com/go-redis/redis/v7"
+	goredislib "github.com/go-redis/redis/v9"
 	"log"
 	"sync"
 	"sync/atomic"
