@@ -7,7 +7,7 @@ import (
 	"log"
 	"sync/atomic"
 	"time"
-	"webserver/tool"
+	"ztool/database"
 )
 
 type Game struct {
@@ -31,7 +31,7 @@ func Handler(c *gin.Context) {
 
 func GetFromDb() (name string) {
 	var game Game
-	tool.GetDB().Where("id=1").First(&game)
+	database.GetDB().Where("id=1").First(&game)
 	//time.Sleep(5000 * time.Millisecond)
 	name = game.Name
 	atomic.AddInt64(&c1, 1)
@@ -40,7 +40,7 @@ func GetFromDb() (name string) {
 }
 
 func GetFromRedis() (name string) {
-	name = tool.GetDefaultClient().Get(context.Background(), "gameName").Val()
+	name = database.GetDefaultClient().Get(context.Background(), "gameName").Val()
 	//time.Sleep(50 * time.Millisecond)
 	atomic.AddInt64(&c2, 1)
 	//log.Println("读取缓存次数:", c2)
@@ -49,7 +49,7 @@ func GetFromRedis() (name string) {
 
 func CacheToRedis(name string) {
 	atomic.AddInt64(&c3, 1)
-	tool.GetDefaultClient().Set(context.Background(), "gameName", name, 30*time.Second)
+	database.GetDefaultClient().Set(context.Background(), "gameName", name, 30*time.Second)
 	log.Println("缓存数据次数:", c3)
 }
 

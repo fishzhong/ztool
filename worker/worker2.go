@@ -1,6 +1,7 @@
 package worker
 
 import (
+	"testing"
 	"time"
 )
 
@@ -106,4 +107,12 @@ func (d *Dispatcher) dispatch() {
 func payloadHandler(id int) {
 	work := Job{PayLoad: Payload{Id: id}}
 	JobQueue <- work
+}
+
+func BenchmarkPayloadHandler(b *testing.B) {
+	dispatch := NewDispatcher(MaxWorker)
+	dispatch.Run()
+	for i := 0; i < b.N; i++ {
+		payloadHandler(i)
+	}
 }
