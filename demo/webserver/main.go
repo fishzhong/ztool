@@ -1,10 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	cache "github.com/chenyahui/gin-cache"
 	"github.com/chenyahui/gin-cache/persist"
 	"github.com/gin-gonic/gin"
+	"log"
+	"net/http"
 	"time"
 	"ztool/demo/webserver/handler"
 )
@@ -36,7 +39,6 @@ func mid3(c *gin.Context) {
 	fmt.Println("func mid3")
 
 }
-
 
 func checkOrderSuccessHandler(c *gin.Context) {
 	order, _ := c.GetQuery("order")
@@ -104,7 +106,6 @@ func orderBack(ch chan struct{}, orderNumber string) {
 	time.Sleep(4 * time.Second)
 	ch <- struct{}{}
 }
-
 
 func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
